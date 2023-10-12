@@ -14,7 +14,16 @@ ter-homeworks/01
 8. Уничтожьте созданные ресурсы с помощью **terraform**. Убедитесь, что все ресурсы удалены. Приложите содержимое файла **terraform.tfstate**. 
 9. Объясните, почему при этом не был удалён docker-образ **nginx:latest**. Ответ **обязательно** подкрепите строчкой из документации [**terraform провайдера docker**](https://docs.comcloud.xyz/providers/kreuzwerker/docker/latest/docs).  (ищите в классификаторе resource docker_image )
 ### Ответ
-![2](
+
+2. personal.auto.tfvars
+                  
+![2](https://github.com/yarkuliko3/ter-homeworks_01/blob/main/Screenshot%20from%202023-10-12%2014-43-23.png?raw=true)
+
+3. "result": "KJ7gJkuASP9s9Ni6"
+
+4. В блоке "docker_image" отстутствовал один label;
+   в блоке "docker_container" второй label начинался с цифры, а должен с буквы или подчеркивания.
+5. 
 
 ------
 
