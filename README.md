@@ -22,8 +22,55 @@ ter-homeworks/01
 3. "result": "KJ7gJkuASP9s9Ni6"
 
 4. В блоке "docker_image" отстутствовал один label;
-   в блоке "docker_container" второй label начинался с цифры, а должен с буквы или подчеркивания.
-5. 
+   в блоке "docker_container" второй label начинался с цифры, а должен с буквы или подчеркивания, также в строках были лишние слова.
+
+5.
+```
+yaroslav@yar-linx:~$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
+04b74811b8b2   nginx:latest   "/docker-entrypoint.…"   8 seconds ago   Up 7 seconds   0.0.0.0:8000->80/tcp   example_KJ7gJkuASP9s9Ni6
+```
+```
+resource "docker_image" "nginx" {
+  name = "nginx:latest"
+  keep_locally = true
+}
+
+
+resource "docker_container" "nginx" {
+  image = "nginx:latest"
+  name = "example_${random_password.random_string.result}"
+    ports {
+      internal = 80
+      external = 8000
+    }
+}
+```
+6.
+```
+yaroslav@yar-linx:~$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                  NAMES
+5af91496b0c1   nginx:latest   "/docker-entrypoint.…"   4 seconds ago   Up 3 seconds   0.0.0.0:8000->80/tcp   hello_world
+```
+Использование -auto approve автоматически применяет конфиг без ознакомления с планом. Такая опция может быть использована только в некритической инфраструктуре, так как может привести к непредвиденным ошибкам, поломкам и простою сервиса.
+
+7.
+```
+yaroslav@yar-linx:~$ cat terraform.tfstate
+{
+  "version": 4,
+  "terraform_version": "1.5.5",
+  "serial": 13,
+  "lineage": "a23bf77b-d7e7-36d2-17c2-d6faba6944aa",
+  "outputs": {},
+  "resources": [],
+  "check_results": null
+}
+```
+
+8. Образ не был удален, так как была использована опция -keep_locally
+   
+   `keep_locally (Boolean) If true, then the Docker image won't be deleted on destroy operation. If this is false, it will delete the image from the docker local storage on destroy operation.`
 
 ------
 
